@@ -5,7 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/util/side_nav_item.dart';
 
 class SideNav extends StatelessWidget {
-  const SideNav({super.key});
+  final List userData;
+  const SideNav({super.key, required this.userData});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class SideNav extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Adenuga Adewumi Efe',
+                      userData[0]['name'],
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.poppins(
                         fontSize: 20,
@@ -54,7 +55,7 @@ class SideNav extends StatelessWidget {
                       height: 2,
                     ),
                     Text(
-                      'Web Developer',
+                      userData[0]['occupation'],
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w300,
