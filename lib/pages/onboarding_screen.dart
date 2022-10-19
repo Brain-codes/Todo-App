@@ -7,6 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:todo_app/intro_screens/intro_page_1.dart';
 import 'package:todo_app/intro_screens/intro_page_2.dart';
 import 'package:todo_app/intro_screens/intro_page_3.dart';
+import 'package:todo_app/pages/account_edit.dart';
 import 'package:todo_app/pages/home_page.dart';
 
 import '../data/database.dart';
@@ -88,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return HomePage();
+                                return AccountEdit();
                               },
                             ),
                           );

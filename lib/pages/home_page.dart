@@ -21,19 +21,29 @@ class _HomePageState extends State<HomePage> {
   //REFERENCE THE HIVE BOX
   final _myBox = Hive.box('myBox');
   TodoDataBase db = TodoDataBase();
+  var userData = {};
 
   //TEXT CONTROLLER
   final _controller = TextEditingController();
+
+  //GET USERDATA FROM DATABASE
+  void getUserDb() {
+    db.getUserData();
+    userData = db.gottenUserData;
+  }
 
   @override
   void initState() {
     //FIRST TIME EVER OPENING THE APP
     if (_myBox.get('TODOLIST') == null) {
       db.createInitialData();
+      getUserDb();
     } else {
       //THERE ALREADY EXIST DATA
       db.loadData();
+      getUserDb();
     }
+    print(userData);
     super.initState();
   }
 
@@ -106,7 +116,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFF050A18),
       drawer: Drawer(
-        child: SideNav(),
+        child: SideNav(userData: [userData],),
       ),
       appBar: AppBar(
         leading: Builder(

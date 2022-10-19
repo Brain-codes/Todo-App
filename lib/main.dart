@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/pages/account_edit.dart';
 import 'package:todo_app/pages/onboarding_screen.dart';
 import 'data/database.dart';
 import 'pages/home_page.dart';
@@ -29,7 +30,8 @@ class MyApp extends StatelessWidget {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _myBox.get('ONBOARDING') == true ? HomePage() : OnBoardingScreen(),
+      home:
+          _myBox.get('ONBOARDING') == true ? AccountEdit() : OnBoardingScreen(),
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Color(0xFF050A18),

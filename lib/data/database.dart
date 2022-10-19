@@ -1,7 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/data/user_object.dart';
 
 class TodoDataBase {
   List toDoList = [];
+  Map gottenUserData = {};
 
   //REFERENCE THE BOX
   final _myBox = Hive.box('myBox');
@@ -30,7 +32,16 @@ class TodoDataBase {
   }
 
   //GET IF USER HAS CLICKED DONE IN ONBOARDING PAGE
-    void onBoardingCheck() {
+  void onBoardingCheck() {
     toDoList = _myBox.get('ONBOARDING');
+  }
+
+  //CREATING A USER DATA
+  void creatingUser(Map userData) {
+    _myBox.put('USERDATA', userData);
+  }
+
+  void getUserData() {
+  gottenUserData =   _myBox.get('USERDATA');
   }
 }
