@@ -41,6 +41,7 @@ dependencies:
   google_fonts: ^3.0.1
   smooth_page_indicator: ^1.0.0+2
   lottie: ^1.4.3
+  flutter_native_splash: ^2.0.4
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,19 @@ dev_dependencies:
   build_runner: ^2.1.11
   flutter_launcher_icons: ^0.10.0
   loading_animation_widget: ^1.2.0+3
+
+flutter_native_splash:
+  color: '#250b5a'
+  color_dark: '#250b5a'
+  image: images/logo.png
+  image_dark: images/logo.png
+
+  android_12:
+    image: images/logo.png
+    icon_background_color: '#250b5a'
+    image_dark: images/logo.png
+    icon_background_color_dark: '#250b5a'
+
 
 flutter_icons:
   android: true
