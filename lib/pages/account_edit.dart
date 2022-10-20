@@ -11,7 +11,8 @@ import '../data/database.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AccountEdit extends StatefulWidget {
-  const AccountEdit({super.key});
+  final String type;
+  AccountEdit({super.key, required this.type});
 
   @override
   State<AccountEdit> createState() => _AccountEditState();
@@ -21,9 +22,9 @@ class _AccountEditState extends State<AccountEdit> {
   TodoDataBase db = TodoDataBase();
 
   //CONTROLLER FOR OUR FORM FIELD
-  final _emailController = TextEditingController();
-  final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
+  var _emailController = TextEditingController();
+  var _nameController = TextEditingController();
+  var _phoneController = TextEditingController();
   var loading = false;
   var toContinue = false;
   var validated = false;
@@ -54,15 +55,6 @@ class _AccountEditState extends State<AccountEdit> {
         'dob':
             '${_dateTime.month.toString()} / ${_dateTime.day.toString()} / ${_dateTime.year.toString()}'
       };
-      // userData = [
-      //   [(_nameController.text)],
-      //   [(_emailController.text.trim())],
-      //   [(_phoneController.text.trim())],
-      //   [(dropdownvalue)],
-      //   [
-      //     '${_dateTime.month.toString()} / ${_dateTime.day.toString()} / ${_dateTime.year.toString()}'
-      //   ],
-      // ];
 
       db.creatingUser(userData);
       db.getUserData();
@@ -76,6 +68,24 @@ class _AccountEditState extends State<AccountEdit> {
     } else {
       _emptyFieldDialog(context);
       print(dropdownvalue);
+    }
+  }
+
+  //IF IT IS EDIT, ASSIGNING OUR FORM VALUE TO DEFAULT VALUE
+  Map editUserData = {};
+  @override
+  void initState() {
+    super.initState();
+    if (widget.type == 'edit') {
+      db.getUserData();
+      editUserData = db.gottenUserData;
+      print('USER DATA EDIT $editUserData');
+      setState(() {
+        dropdownvalue = editUserData['occupation'];
+        _nameController = TextEditingController(text: editUserData['name']);
+        _emailController = TextEditingController(text: editUserData['email']);
+        _phoneController = TextEditingController(text: editUserData['phone']);
+      });
     }
   }
 
@@ -128,7 +138,9 @@ class _AccountEditState extends State<AccountEdit> {
                   height: 40,
                 ),
                 Text(
-                  'Welcome to Todos!',
+                  widget.type == 'edit'
+                      ? 'Edit Your Details!'
+                      : 'Welcome to Todos!',
                   style: GoogleFonts.poppins(
                     fontSize: 30,
                     fontWeight: FontWeight.w600,
@@ -138,7 +150,9 @@ class _AccountEditState extends State<AccountEdit> {
                   height: 10,
                 ),
                 Text(
-                  'Input in your details to get started as soon as possible.',
+                  widget.type == 'edit'
+                      ? 'Make a quick edit to your profile so we can know you better.'
+                      : 'Input in your details to get started as soon as possible.',
                   style: GoogleFonts.poppins(
                     fontSize: 17,
                     fontWeight: FontWeight.w300,
@@ -300,6 +314,7 @@ class _AccountEditState extends State<AccountEdit> {
                     hintText: 'Occupation',
                   ),
                   dropdownColor: Color(0xFF250b5a),
+                  value: dropdownvalue,
                   items: items.map((String items) {
                     return DropdownMenuItem(
                       value: items,

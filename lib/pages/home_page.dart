@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:todo_app/data/database.dart';
 import 'package:todo_app/pages/profile_page.dart';
 import 'package:todo_app/util/dialog_box.dart';
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       db.loadData();
       getUserDb();
     }
-    print(userData);
+
     super.initState();
   }
 
@@ -116,7 +117,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Color(0xFF050A18),
       drawer: Drawer(
-        child: SideNav(userData: [userData],),
+        child: SideNav(
+          userData: [userData],
+        ),
       ),
       appBar: AppBar(
         leading: Builder(
@@ -135,7 +138,9 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Profile(),
+                      builder: (context) => Profile(
+                        userData: [userData],
+                      ),
                     ),
                   );
                 },
@@ -160,17 +165,36 @@ class _HomePageState extends State<HomePage> {
           color: Colors.white,
         ),
       ),
-      body: ListView.builder(
-        itemCount: db.toDoList.length,
-        itemBuilder: (context, index) {
-          return ToDoTile(
-            taskName: db.toDoList[index][0],
-            taskCompleted: db.toDoList[index][1],
-            deleteFunction: (context) => deleteTask(index),
-            onChanged: (value) => checkBoxChanged(value, index),
-          );
-        },
-      ),
+      body: db.toDoList.isEmpty
+          ? Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'You currently don\'t have any todos at the moment',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Lottie.network(
+                      'https://assets3.lottiefiles.com/packages/lf20_z4cshyhf.json'),
+                ],
+              ),
+            )
+          : ListView.builder(
+              itemCount: db.toDoList.length,
+              itemBuilder: (context, index) {
+                return ToDoTile(
+                  taskName: db.toDoList[index][0],
+                  taskCompleted: db.toDoList[index][1],
+                  deleteFunction: (context) => deleteTask(index),
+                  onChanged: (value) => checkBoxChanged(value, index),
+                );
+              },
+            ),
     );
   }
 }

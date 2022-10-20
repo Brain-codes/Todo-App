@@ -89,7 +89,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return AccountEdit();
+                                return AccountEdit(type: 'starting',);
                               },
                             ),
                           );

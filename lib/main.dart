@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home:
-          _myBox.get('ONBOARDING') == true ? AccountEdit() : OnBoardingScreen(),
+          _myBox.get('ONBOARDING') == true ? HomePage() : OnBoardingScreen(),
       theme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Color(0xFF050A18),

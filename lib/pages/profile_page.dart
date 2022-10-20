@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/pages/account_edit.dart';
 import 'package:todo_app/util/profile_tiles.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({super.key});
+  final List userData;
+  const Profile({super.key, required this.userData});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -86,8 +88,28 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 25,
                 ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AccountEdit(type: 'edit'),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Tap to edit',
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
                 Text(
-                  'Adenuga Adewumi Efe',
+                  widget.userData[0]['name'],
                   style: GoogleFonts.bebasNeue(
                     fontWeight: FontWeight.w600,
                     fontSize: 27,
@@ -99,53 +121,69 @@ class _ProfileState extends State<Profile> {
                   height: 6,
                 ),
                 Text(
-                  'Type to edit',
-                  style: GoogleFonts.inter(
+                  widget.userData[0]['email'],
+                  style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w300,
-                    fontSize: 12,
+                    fontSize: 13,
                   ),
                 ),
+                SizedBox(
+                  height: 6,
+                ),
+                Text(
+                  widget.userData[0]['occupation'],
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 13,
+                  ),
+                ),
+                SizedBox(
+                  height: 6,
+                ),
+                Text(
+                  widget.userData[0]['phone'],
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 13,
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                const Divider(
+                  height: 0.5,
+                  thickness: 0.5,
+                  endIndent: 0,
+                  color: Color.fromARGB(80, 255, 255, 255),
+                )
               ],
             ),
             SizedBox(
               height: 25,
             ),
-
             ProfileTile(
               desc: settingsItem[0][1],
               name: settingsItem[0][0],
               icon: Icons.person,
             ),
-
             ProfileTile(
               name: settingsItem[1][0],
               desc: settingsItem[1][1],
               icon: Icons.headset_mic,
             ),
-
             ProfileTile(
               name: settingsItem[2][0],
               desc: settingsItem[2][1],
               icon: Icons.file_copy,
             ),
-
             ProfileTile(
               name: settingsItem[3][0],
               desc: settingsItem[3][1],
               icon: Icons.co_present_rounded,
             ),
-
-            // ListView.builder(
-            //   itemCount: settingsItem.length,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   itemBuilder: (context, index) {
-            //     return ProfileTile(
-            //       name: settingsItem[index][0],
-            //       desc: settingsItem[index][1],
-            //       icon: settingsItem[index][2],
-            //     );
-            //   },
-            // )
+            SizedBox(
+              height: 35,
+            ),
           ],
         ),
       ),
