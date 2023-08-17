@@ -12,7 +12,7 @@ class TodoDataBase {
   void createInitialData() {
     toDoList = [
       ['Welcome to Todo', false],
-      ['Swipe right', false],
+      ['Swipe right', false], 
     ];
   }
 
